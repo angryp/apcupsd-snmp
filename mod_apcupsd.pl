@@ -90,7 +90,7 @@ my $mapping = [
     ['LINEFREQ',    '3.2.4.0',  ASN_GAUGE],         # upsAdvInputFrequency
     ['LASTXFER',    '3.2.5.0',  ASN_INTEGER],       # upsAdvInputLineFailCause
     ['OUTPUTV',     '4.2.1.0',  ASN_GAUGE],         # upsAdvOutputVoltage
-    ['LOADPCT',     '4.2.3.0',  ASN_GAUGE],         # upsAdvOutputLoad
+    ['LOADPCT',     '4.3.3.0',  ASN_GAUGE],         # upsHighPrecOutputLoad
     ['NOMOUTV',     '5.2.1.0',  ASN_INTEGER],       # upsAdvConfigRatedOutputVoltage
     ['HITRANS',     '5.2.2.0',  ASN_INTEGER],       # upsAdvConfigHighTransferVolt
     ['LOTRANS',     '5.2.3.0',  ASN_INTEGER],       # upsAdvConfigLowTransferVolt
@@ -101,22 +101,12 @@ my $mapping = [
     ['DWAKE',       '5.2.9.0',  ASN_TIMETICKS],     # upsAdvConfigReturnDelay
     ['DSHUTD',      '5.2.10.0', ASN_TIMETICKS],     # upsAdvConfigShutoffDelay
     ['STESTI',      '7.2.1.0',  ASN_INTEGER],       # upsAdvTestDiagnosticSchedule
-    ['SELFTEST',    '7.2.3.0',  ASN_INTEGER],       # upsAdvTestDiagnosticsResults //according to apcstatus.c, or date and time of last self test according to manual?!
-    ['STATUS',      '4.1.1.0',  ASN_INTEGER]        # upsBasicOutputStatus
+    ['SELFTEST',    '7.2.3.0',  ASN_INTEGER]        # upsAdvTestDiagnosticsResults //according to apcstatus.c, or date and time of last self test according to manual?!
 ];
 
 # Maps apcupsd values to enum types according to MIB.
 # Mainly based on apcupsd sources (apcstatus.c, drv_powernet.c) and PowerNet MIB.
 my %enums = (
-    # STATUS => upsBasicOutputStatus
-    "$base_oid.4.1.1.0" => {
-        'UNKNOWN' => 1,   # unknown
-        'ONLINE'  => 2,   # onLine
-        'ONBATT'  => 3,   # onBattery
-        'BOOST'   => 4,   # onSmartBoost
-        'TRIM'    => 12,  # onSmartTrim
-    },
-
     # SELFTEST => upsAdvTestDiagnosticsResults
     "$base_oid.7.2.3.0" => {
         'OK'    => 1,   # ok
@@ -169,7 +159,7 @@ my %enums = (
     }
 );
 
-# TODO upsBasicBatteryStatus, NOMPOWER
+# TODO upsBasicBatteryStatus, upsBasicOutputStatus, NOMPOWER
 
 
 
@@ -259,6 +249,7 @@ sub fetch_data {
         chomp $line;
         if ($line !~ /^(\w+)\s*:\s*(.*\w)/) { next; }
 
+#        my $value = &multiply_value($oid, $2) if $oid;
         my $oid = $name_oid{$1};
         my $value = &convert_value($oid, $2) if $oid;
         $data{$oid} = $value if (defined $value);
@@ -282,6 +273,14 @@ sub convert_value {
     if (exists $enums{$oid}) {
         my $enum = $enums{$oid}{$raw};
         return (defined $enum ? $enum : 0);
+    }
+
+    my $exception = '.1.3.6.1.4.1.318.1.1.1.4.3.3.0';
+
+    # Hack for Smart-UPS RC 10000, as it only has upsHighPrecOutputLoad
+    # It is tenths of percent according to MIB
+    if ($oid eq $exception) {
+        $raw*=10;
     }
 
     # Convert other values according to their data type in MIB
