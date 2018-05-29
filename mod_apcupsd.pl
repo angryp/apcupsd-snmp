@@ -64,10 +64,10 @@ use NetSNMP::ASN (':all');
 
 
 # Set to 1 to get extra debugging information.
-$debugging = 1;
+$debugging = 0;
 
 # How often fetch data from /sbin/apcaccess (in seconds)?
-my $fetch_interval = 10;
+my $fetch_interval = 20;
 
 # Base OID of APC UPS tree to hook onto.
 my $base_oid = '.1.3.6.1.4.1.318.1.1.1';
