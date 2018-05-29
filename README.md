@@ -22,63 +22,61 @@ Try `snmpwalk -v 2c -c public <host> .1.3.6.1.4.1.318.1.1.1` and you should
 get something like:
 
 	$ snmpwalk -v 2c -c public localhost .1.3.6.1.4.1.318.1.1.1
-	PowerNet-MIB::upsBasicIdentModel.0 = STRING: "Back-UPS RS 500"
-	PowerNet-MIB::upsBasicIdentName.0 = STRING: "grid"
-	PowerNet-MIB::upsAdvIdentFirmwareRevision.0 = STRING: "30.j2.I USB FW:j2"
-	PowerNet-MIB::upsAdvIdentSerialNumber.0 = STRING: "BB0314005xxx"
+	PowerNet-MIB::upsBasicIdentName.0 = STRING: "secretstring"
+	PowerNet-MIB::upsAdvIdentFirmwareRevision.0 = STRING: "468.00.I"
+	PowerNet-MIB::upsAdvIdentSerialNumber.0 = STRING: "secretstring"
 	PowerNet-MIB::upsBasicBatteryTimeOnBattery.0 = Timeticks: (0) 0:00:00.00
-	PowerNet-MIB::upsBasicBatteryLastReplaceDate.0 = STRING: "2009-02-26"
+	PowerNet-MIB::upsBasicBatteryLastReplaceDate.0 = STRING: "08/15/14"
 	PowerNet-MIB::upsAdvBatteryCapacity.0 = Gauge32: 100
-	PowerNet-MIB::upsAdvBatteryTemperature.0 = Gauge32: 29
-	PowerNet-MIB::upsAdvBatteryRunTimeRemaining.0 = Timeticks: (190200) 0:31:42.00
-	PowerNet-MIB::upsAdvBatteryNominalVoltage.0 = INTEGER: 12
-	PowerNet-MIB::upsAdvBatteryActualVoltage.0 = INTEGER: 13
-	PowerNet-MIB::upsAdvInputLineVoltage.0 = Gauge32: 228
-	PowerNet-MIB::upsAdvInputFrequency.0 = Gauge32: 49
-	PowerNet-MIB::upsAdvInputLineFailCause.0 = INTEGER: blackout(4)
-	PowerNet-MIB::upsAdvOutputVoltage.0 = Gauge32: 230
-	PowerNet-MIB::upsAdvOutputLoad.0 = Gauge32: 22
+	PowerNet-MIB::upsAdvBatteryTemperature.0 = Gauge32: 20
+	PowerNet-MIB::upsAdvBatteryRunTimeRemaining.0 = Timeticks: (192000) 0:32:00.00
+	PowerNet-MIB::upsAdvBatteryNominalVoltage.0 = INTEGER: 240
+	PowerNet-MIB::upsAdvBatteryActualVoltage.0 = INTEGER: 275
+	PowerNet-MIB::upsAdvInputLineVoltage.0 = Gauge32: 220
+	PowerNet-MIB::upsAdvInputFrequency.0 = Gauge32: 50
+	PowerNet-MIB::upsAdvInputLineFailCause.0 = INTEGER: largeMomentarySpike(8)
+	PowerNet-MIB::upsAdvOutputVoltage.0 = Gauge32: 229
+	PowerNet-MIB::upsHighPrecOutputLoad.0 = Gauge32: 230
 	PowerNet-MIB::upsAdvConfigRatedOutputVoltage.0 = INTEGER: 230
-	PowerNet-MIB::upsAdvConfigHighTransferVolt.0 = INTEGER: 254
-	PowerNet-MIB::upsAdvConfigLowTransferVolt.0 = INTEGER: 198
-	PowerNet-MIB::upsAdvConfigAlarm.0 = INTEGER: atLowBattery(2)
+	PowerNet-MIB::upsAdvConfigHighTransferVolt.0 = INTEGER: 265
+	PowerNet-MIB::upsAdvConfigLowTransferVolt.0 = INTEGER: 196
+	PowerNet-MIB::upsAdvConfigAlarm.0 = INTEGER: 0
 	PowerNet-MIB::upsAdvConfigMinReturnCapacity.0 = INTEGER: 0
 	PowerNet-MIB::upsAdvConfigSensitivity.0 = INTEGER: high(4)
-	PowerNet-MIB::upsAdvConfigLowBatteryRunTime.0 = Timeticks: (24000) 0:04:00.00
+	PowerNet-MIB::upsAdvConfigLowBatteryRunTime.0 = Timeticks: (0) 0:00:00.00
 	PowerNet-MIB::upsAdvConfigReturnDelay.0 = Timeticks: (0) 0:00:00.00
-	PowerNet-MIB::upsAdvConfigShutoffDelay.0 = Timeticks: (0) 0:00:00.00
-	PowerNet-MIB::upsAdvTestDiagnosticSchedule.0 = INTEGER: unknown(1)
+	PowerNet-MIB::upsAdvConfigShutoffDelay.0 = Timeticks: (96000) 0:16:00.00
+	PowerNet-MIB::upsAdvTestDiagnosticSchedule.0 = INTEGER: biweekly(2)
 	PowerNet-MIB::upsAdvTestDiagnosticsResults.0 = INTEGER: 0
-	
+
 or if you like numeric OIDs:
 
-	snmpwalk -v 2c -c public -On localhost .1.3.6.1.4.1.318.1.1.1
-	.1.3.6.1.4.1.318.1.1.1.1.1.1.0 = STRING: "Back-UPS RS 500"
-	.1.3.6.1.4.1.318.1.1.1.1.1.2.0 = STRING: "grid"
-	.1.3.6.1.4.1.318.1.1.1.1.2.1.0 = STRING: "30.j2.I USB FW:j2"
-	.1.3.6.1.4.1.318.1.1.1.1.2.3.0 = STRING: "BB0314005xxx"
+	$ snmpwalk -v 2c -c public localhost .1.3.6.1.4.1.318.1.1.1
+	.1.3.6.1.4.1.318.1.1.1.1.1.2.0 = STRING: "secretstring"
+	.1.3.6.1.4.1.318.1.1.1.1.2.1.0 = STRING: "468.00.I"
+	.1.3.6.1.4.1.318.1.1.1.1.2.3.0 = STRING: "secretstring"
 	.1.3.6.1.4.1.318.1.1.1.2.1.2.0 = Timeticks: (0) 0:00:00.00
-	.1.3.6.1.4.1.318.1.1.1.2.1.3.0 = STRING: "2009-02-26"
+	.1.3.6.1.4.1.318.1.1.1.2.1.3.0 = STRING: "08/15/14"
 	.1.3.6.1.4.1.318.1.1.1.2.2.1.0 = Gauge32: 100
-	.1.3.6.1.4.1.318.1.1.1.2.2.2.0 = Gauge32: 29
-	.1.3.6.1.4.1.318.1.1.1.2.2.3.0 = Timeticks: (184800) 0:30:48.00
-	.1.3.6.1.4.1.318.1.1.1.2.2.7.0 = INTEGER: 12
-	.1.3.6.1.4.1.318.1.1.1.2.2.8.0 = INTEGER: 13
-	.1.3.6.1.4.1.318.1.1.1.3.2.1.0 = Gauge32: 228
-	.1.3.6.1.4.1.318.1.1.1.3.2.4.0 = Gauge32: 49
-	.1.3.6.1.4.1.318.1.1.1.3.2.5.0 = INTEGER: blackout(4)
-	.1.3.6.1.4.1.318.1.1.1.4.2.1.0 = Gauge32: 230
-	.1.3.6.1.4.1.318.1.1.1.4.2.3.0 = Gauge32: 21
+	.1.3.6.1.4.1.318.1.1.1.2.2.2.0 = Gauge32: 20
+	.1.3.6.1.4.1.318.1.1.1.2.2.3.0 = Timeticks: (192000) 0:32:00.00
+	.1.3.6.1.4.1.318.1.1.1.2.2.7.0 = INTEGER: 240
+	.1.3.6.1.4.1.318.1.1.1.2.2.8.0 = INTEGER: 275
+	.1.3.6.1.4.1.318.1.1.1.3.2.1.0 = Gauge32: 220
+	.1.3.6.1.4.1.318.1.1.1.3.2.4.0 = Gauge32: 50
+	.1.3.6.1.4.1.318.1.1.1.3.2.5.0 = INTEGER: largeMomentarySpike(8)
+	.1.3.6.1.4.1.318.1.1.1.4.2.1.0 = Gauge32: 229
+	.1.3.6.1.4.1.318.1.1.1.4.3.3.0 = Gauge32: 230
 	.1.3.6.1.4.1.318.1.1.1.5.2.1.0 = INTEGER: 230
-	.1.3.6.1.4.1.318.1.1.1.5.2.2.0 = INTEGER: 254
-	.1.3.6.1.4.1.318.1.1.1.5.2.3.0 = INTEGER: 198
-	.1.3.6.1.4.1.318.1.1.1.5.2.4.0 = INTEGER: atLowBattery(2)
+	.1.3.6.1.4.1.318.1.1.1.5.2.2.0 = INTEGER: 265
+	.1.3.6.1.4.1.318.1.1.1.5.2.3.0 = INTEGER: 196
+	.1.3.6.1.4.1.318.1.1.1.5.2.4.0 = INTEGER: 0
 	.1.3.6.1.4.1.318.1.1.1.5.2.6.0 = INTEGER: 0
 	.1.3.6.1.4.1.318.1.1.1.5.2.7.0 = INTEGER: high(4)
-	.1.3.6.1.4.1.318.1.1.1.5.2.8.0 = Timeticks: (24000) 0:04:00.00
+	.1.3.6.1.4.1.318.1.1.1.5.2.8.0 = Timeticks: (0) 0:00:00.00
 	.1.3.6.1.4.1.318.1.1.1.5.2.9.0 = Timeticks: (0) 0:00:00.00
-	.1.3.6.1.4.1.318.1.1.1.5.2.10.0 = Timeticks: (0) 0:00:00.00
-	.1.3.6.1.4.1.318.1.1.1.7.2.1.0 = INTEGER: unknown(1)
+	.1.3.6.1.4.1.318.1.1.1.5.2.10.0 = Timeticks: (96000) 0:16:00.00
+	.1.3.6.1.4.1.318.1.1.1.7.2.1.0 = INTEGER: biweekly(2)
 	.1.3.6.1.4.1.318.1.1.1.7.2.3.0 = INTEGER: 0
 
 You can also query only one OID:
@@ -106,6 +104,5 @@ my APC Back-UP RS 500.
 * Download PowerNet (APC) MIB file: 
 [powernet401.mib](http://www.michaelfmcnamara.com/files/mibs/powernet401.mib).
 
-* I'm not skilled Perl programmer, this is my first Perl script I ever wrote.
-So if you find something weird in it, please let me know about it and fix it.
-However it's working perfectly fine for me, so I hope it's ok.
+* Great thank you to @jirutka for initial script, it really helped for general
+purpose, but very little adjustments should have been done for Smart-UPS RC 10000.
